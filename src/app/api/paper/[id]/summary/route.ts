@@ -4,10 +4,11 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const response = await fetch(`${API_BASE_URL}/paper/${params.id}/summary`, {
+    const { id } = await params;
+    const response = await fetch(`${API_BASE_URL}/paper/${id}/summary`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

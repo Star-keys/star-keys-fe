@@ -34,7 +34,7 @@ export default function PlanetDetail() {
               <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center">
                 <h3 className="text-2xl md:text-3xl mb-6">Star Keys</h3>
                 <div className="space-y-4 text-sm md:text-base">
-                  <p>Hi, I'm Deon Overfelt. I used to be a card-carrying member of the 'Meat Lovers' Club.'</p>
+                  <p>Hi, I&apos;m Deon Overfelt. I used to be a card-carrying member of the &apos;Meat Lovers&apos; Club.&apos;</p>
                   <p>Then, I wondered...what if I tried going vegan? For a year? So I did.</p>
                   <p className="text-xs text-gray-600">(team intro)</p>
                 </div>

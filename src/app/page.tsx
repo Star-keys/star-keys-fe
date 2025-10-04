@@ -1,10 +1,16 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
+
+interface Paper {
+  id?: string | number;
+  title: string;
+}
 
 export default function Home() {
   const [query, setQuery] = useState('');
-  const [papers, setPapers] = useState<any[]>([]);
+  const [papers, setPapers] = useState<Paper[]>([]);
   const [loading, setLoading] = useState(false);
 
   const handleSearch = async (e: React.FormEvent) => {
@@ -30,8 +36,8 @@ export default function Home() {
         <div className="max-w-[1280px] mx-auto text-center">
           <h1 className="text-3xl md:text-5xl lg:text-6xl leading-tight mb-4 md:mb-6">
             Come Closer:<br />
-            I'll Show You<br />
-            Who's Out There
+            I&apos;ll Show You<br />
+            Who&apos;s Out There
           </h1>
           <button className="px-4 md:px-6 py-2 bg-blue-600 text-white text-xs md:text-sm border-2 border-blue-700">
             (project intro)
@@ -74,7 +80,7 @@ export default function Home() {
         <div className="max-w-[1280px] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-300 border border-gray-300">
             {/* Planet #01 */}
-            <a href="/planet/1" className="p-8 md:p-10 lg:p-12 text-center bg-white hover:bg-gray-50 cursor-pointer block">
+            <Link href="/planet/1" className="p-8 md:p-10 lg:p-12 text-center bg-white hover:bg-gray-50 cursor-pointer block">
               <div className="mb-4">
                 <p className="text-xs mb-1">Planet</p>
                 <p className="text-base md:text-lg">#01</p>
@@ -84,10 +90,10 @@ export default function Home() {
               </div>
               <p className="text-xs mb-2 md:mb-3">Search by</p>
               <div className="text-xl md:text-2xl text-gray-400">↘</div>
-            </a>
+            </Link>
 
             {/* Planet #02 */}
-            <a href="/planet/2" className="p-8 md:p-10 lg:p-12 text-center bg-white hover:bg-gray-50 cursor-pointer block">
+            <Link href="/planet/2" className="p-8 md:p-10 lg:p-12 text-center bg-white hover:bg-gray-50 cursor-pointer block">
               <div className="mb-4">
                 <p className="text-xs mb-1">Planet</p>
                 <p className="text-base md:text-lg">#02</p>
@@ -97,10 +103,10 @@ export default function Home() {
               </div>
               <p className="text-xs mb-2 md:mb-3">Search by</p>
               <div className="text-xl md:text-2xl text-gray-400">↘</div>
-            </a>
+            </Link>
 
             {/* Planet #03 */}
-            <a href="/planet/3" className="p-8 md:p-10 lg:p-12 text-center bg-white hover:bg-gray-50 cursor-pointer block">
+            <Link href="/planet/3" className="p-8 md:p-10 lg:p-12 text-center bg-white hover:bg-gray-50 cursor-pointer block">
               <div className="mb-4">
                 <p className="text-xs mb-1">Planet</p>
                 <p className="text-base md:text-lg">#03</p>
@@ -110,7 +116,7 @@ export default function Home() {
               </div>
               <p className="text-xs mb-2 md:mb-3">Search by</p>
               <div className="text-xl md:text-2xl text-gray-400">↘</div>
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -121,7 +127,7 @@ export default function Home() {
           <div className="max-w-[1280px] mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {papers.map((paper, index) => (
-                <a
+                <Link
                   key={paper.id || index}
                   href={`/paper/${paper.id || index}`}
                   className="p-4 md:p-6 border-2 border-gray-300 bg-white hover:border-black transition"
@@ -131,7 +137,7 @@ export default function Home() {
                   <h3 className="text-sm md:text-base mb-2 md:mb-3 hover:underline line-clamp-2">{paper.title}</h3>
                   <p className="text-xs mb-2">Search by</p>
                   <div className="text-lg md:text-xl text-gray-400">↘</div>
-                </a>
+                </Link>
               ))}
             </div>
           </div>

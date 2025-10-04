@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import Link from 'next/link';
 
 interface Paper {
   id: string;
@@ -75,7 +76,7 @@ export default function PaperDetail() {
     return (
       <div className="min-h-screen bg-white">
         <div className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-8">
-          <a href="/" className="inline-block mb-6 text-xs md:text-sm hover:underline">← Back to Home</a>
+          <Link href="/" className="inline-block mb-6 text-xs md:text-sm hover:underline">← Back to Home</Link>
           <div className="p-4 md:p-6 bg-red-50 border-2 border-red-300 text-red-700 text-xs md:text-sm">
             {error}
           </div>
@@ -87,7 +88,7 @@ export default function PaperDetail() {
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-8">
-        <a href="/" className="inline-block mb-6 md:mb-8 text-xs md:text-sm hover:underline">← Back to Home</a>
+        <Link href="/" className="inline-block mb-6 md:mb-8 text-xs md:text-sm hover:underline">← Back to Home</Link>
 
         {paper && (
           <div className="mb-8 md:mb-12">
