@@ -253,43 +253,63 @@ export default function PlanetDetail() {
       <section className="border-t border-gray-300">
         <div className="max-w-[1280px] mx-auto">
           <div className="grid grid-cols-2 divide-x divide-gray-300 border-b border-gray-300">
-            {/* Previous Planet */}
-            <a
-              href={planetId === '1' ? '/planet/3' : `/planet/${Number(planetId) - 1}`}
-              className="p-8 md:p-12 lg:p-16 text-center bg-white hover:bg-gray-50 transition flex flex-col items-center justify-center gap-6"
-            >
-              <div className="flex items-center gap-4">
-                <span className="text-2xl md:text-3xl">←</span>
-                <div className="text-left">
-                  <p className="text-xs mb-1">#{(planetId === '1' ? '03' : String(Number(planetId) - 1).padStart(2, '0'))}</p>
-                  <p className="text-xs">Planet</p>
+            {/* Left Planet */}
+            {planetId === '1' ? (
+              <div className="p-8 md:p-12 lg:p-16 text-center bg-gray-100 opacity-50 cursor-not-allowed flex flex-col items-center justify-center gap-6">
+                <div className="flex items-center gap-4">
+                  <span className="text-2xl md:text-3xl">←</span>
+                  <div className="text-left">
+                    <p className="text-xs mb-1">#02</p>
+                    <p className="text-xs">Planet</p>
+                  </div>
                 </div>
+                <p className="text-xs">Coming Soon</p>
+                <Image
+                  src="/image 100.png"
+                  alt="Coming Soon"
+                  width={80}
+                  height={80}
+                  className="w-16 h-16 md:w-20 md:h-20 object-contain"
+                />
               </div>
-              <p className="text-xs">Search by</p>
-              <Image
-                src={planetId === '1' ? '/image 100.png' : planetId === '2' ? '/image 99.png' : '/image 98.png'}
-                alt="Previous Planet"
-                width={80}
-                height={80}
-                className="w-16 h-16 md:w-20 md:h-20 object-contain"
-              />
-            </a>
+            ) : (
+              <a
+                href={planetId === '3' ? '/planet/1' : `/planet/${Number(planetId) - 1}`}
+                className="p-8 md:p-12 lg:p-16 text-center bg-white hover:bg-gray-50 transition flex flex-col items-center justify-center gap-6"
+              >
+                <div className="flex items-center gap-4">
+                  <span className="text-2xl md:text-3xl">←</span>
+                  <div className="text-left">
+                    <p className="text-xs mb-1">#{(planetId === '3' ? '01' : String(Number(planetId) - 1).padStart(2, '0'))}</p>
+                    <p className="text-xs">Planet</p>
+                  </div>
+                </div>
+                <p className="text-xs">Search by</p>
+                <Image
+                  src={planetId === '2' ? '/image 99.png' : '/image 98.png'}
+                  alt="Previous Planet"
+                  width={80}
+                  height={80}
+                  className="w-16 h-16 md:w-20 md:h-20 object-contain"
+                />
+              </a>
+            )}
 
-            {/* Next Planet */}
+            {/* Right Planet */}
             <a
-              href={planetId === '3' ? '/planet/1' : `/planet/${Number(planetId) + 1}`}
+              href={planetId === '1' ? '/planet/3' : `/planet/${Number(planetId) + 1}`}
               className="p-8 md:p-12 lg:p-16 text-center bg-white hover:bg-gray-50 transition flex flex-col items-center justify-center gap-6"
             >
               <div className="flex items-center gap-4">
                 <div className="text-right">
-                  <p className="text-xs mb-1">#{(planetId === '3' ? '01' : String(Number(planetId) + 1).padStart(2, '0'))}</p>
+                  <p className="text-xs mb-1">#{(planetId === '1' ? '03' : String(Number(planetId) + 1).padStart(2, '0'))}</p>
                   <p className="text-xs">Planet</p>
                 </div>
                 <span className="text-2xl md:text-3xl">→</span>
               </div>
-              <p className="text-xs">About Us</p>
+              <p className="text-xs">{planetId === '1' ? 'About Us' : 'Search by'}</p>
               <Image
-                src={planetId === '1' ? '/image 98.png' : planetId === '2' ? '/image 100.png' : '/image 99.png'}
+                src={planetId === '1' ? '/image 98.png' : '/image 99.png'}
                 alt="Next Planet"
                 width={80}
                 height={80}

@@ -86,7 +86,7 @@ export default function Home() {
             </Link>
 
             {/* Planet #02 */}
-            <div className="p-8 md:p-10 lg:p-12 text-center bg-white">
+            <div className="p-8 md:p-10 lg:p-12 text-center bg-gray-100 opacity-50 cursor-not-allowed">
               <div className="mb-4">
                 <p className="text-xs mb-1">Planet</p>
                 <p className="text-base md:text-lg">#02</p>
@@ -94,7 +94,7 @@ export default function Home() {
               <div className="mb-4 md:mb-6 flex justify-center">
                 <Image src="/image 100.png" alt="Rocket" width={80} height={80} className="w-16 h-16 md:w-20 md:h-20 object-contain" />
               </div>
-              <p className="text-xs mb-2 md:mb-3">Explore</p>
+              <p className="text-xs mb-2 md:mb-3">Coming Soon</p>
               <div className="text-xl md:text-2xl text-gray-400">↘</div>
             </div>
 
