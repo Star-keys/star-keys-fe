@@ -39,20 +39,9 @@ export default function Home() {
             I&apos;ll Show You<br />
             Who&apos;s Out There
           </h1>
-          <button className="px-4 md:px-6 py-2 bg-blue-600 text-white text-xs md:text-sm border-2 border-blue-700">
+          {/* <button className="px-4 md:px-6 py-2 bg-blue-600 text-white text-xs md:text-sm border-2 border-blue-700">
             (project intro)
-          </button>
-        </div>
-      </section>
-
-      {/* Search Tool Section */}
-      <section className="border-t border-b border-gray-300 bg-gray-50 py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl mb-2">(Search tool)</h2>
-            <p className="text-xs md:text-sm text-gray-600">(text)</p>
-          </div>
-
+          </button> */}
           {/* Search Form */}
           <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
             <div className="flex flex-col sm:flex-row gap-2">
@@ -73,6 +62,10 @@ export default function Home() {
             </div>
           </form>
         </div>
+      </section>
+
+      {/* Graph Section */}
+      <section className="border-t border-b border-gray-300 bg-gray-50 py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8">
       </section>
 
       {/* Planet Categories */}
