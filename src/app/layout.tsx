@@ -29,7 +29,9 @@ export default function RootLayout({
             <div className="flex-1 text-center px-2 md:px-4 truncate">
               Space Biology Library • NASA × Star Keys
             </div>
-            <Link href="#about" className="hover:underline whitespace-nowrap">About Us</Link>
+
+
+            <Link href="/planet/3" className="hover:underline whitespace-nowrap">About Us</Link>
           </nav>
         </header>
 

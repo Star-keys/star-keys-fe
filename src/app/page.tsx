@@ -89,33 +89,33 @@ export default function Home() {
               <div className="mb-4 md:mb-6 flex justify-center">
                 <Image src="/image 99.png" alt="UFO" width={80} height={80} className="w-16 h-16 md:w-20 md:h-20 object-contain" />
               </div>
-              <p className="text-xs mb-2 md:mb-3">Search by</p>
+              <p className="text-xs mb-2 md:mb-3">Search</p>
               <div className="text-xl md:text-2xl text-gray-400">↘</div>
             </Link>
 
             {/* Planet #02 */}
-            <Link href="/planet/2" className="p-8 md:p-10 lg:p-12 text-center bg-white hover:bg-gray-50 cursor-pointer block">
+            <div className="p-8 md:p-10 lg:p-12 text-center bg-white">
               <div className="mb-4">
                 <p className="text-xs mb-1">Planet</p>
                 <p className="text-base md:text-lg">#02</p>
               </div>
               <div className="mb-4 md:mb-6 flex justify-center">
-                <Image src="/image 98.png" alt="Alien" width={80} height={80} className="w-16 h-16 md:w-20 md:h-20 object-contain" />
+                <Image src="/image 100.png" alt="Rocket" width={80} height={80} className="w-16 h-16 md:w-20 md:h-20 object-contain" />
               </div>
-              <p className="text-xs mb-2 md:mb-3">Search by</p>
+              <p className="text-xs mb-2 md:mb-3">Explore</p>
               <div className="text-xl md:text-2xl text-gray-400">↘</div>
-            </Link>
+            </div>
 
             {/* Planet #03 */}
-            <Link href="/planet/3" className="p-8 md:p-10 lg:p-12 text-center bg-white hover:bg-gray-50 cursor-pointer block">
+            <Link href="/planet/2" className="p-8 md:p-10 lg:p-12 text-center bg-white hover:bg-gray-50 cursor-pointer block">
               <div className="mb-4">
                 <p className="text-xs mb-1">Planet</p>
                 <p className="text-base md:text-lg">#03</p>
               </div>
               <div className="mb-4 md:mb-6 flex justify-center">
-                <Image src="/image 100.png" alt="Rocket" width={80} height={80} className="w-16 h-16 md:w-20 md:h-20 object-contain" />
+                <Image src="/image 98.png" alt="Alien" width={80} height={80} className="w-16 h-16 md:w-20 md:h-20 object-contain" />
               </div>
-              <p className="text-xs mb-2 md:mb-3">Search by</p>
+              <p className="text-xs mb-2 md:mb-3">About Us</p>
               <div className="text-xl md:text-2xl text-gray-400">↘</div>
             </Link>
           </div>
@@ -125,10 +125,8 @@ export default function Home() {
       {/* About Us Section */}
       <section id="about" className="py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8">
         <div className="max-w-[1280px] mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl mb-6 md:mb-8">About Us</h2>
           <div className="max-w-2xl mx-auto text-sm md:text-base text-gray-700">
-            <p>Space Biology Library is a collaborative project between NASA and Star Keys,
-            exploring the fascinating world of space biology and extraterrestrial research.</p>
+            <p>Star Keys ✕ NASA Space Apps Challenge 2025</p>
           </div>
         </div>
       </section>

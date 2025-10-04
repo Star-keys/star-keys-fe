@@ -1,11 +1,41 @@
 'use client';
 
+import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
+
+interface Paper {
+  _id?: { $oid: string };
+  id?: string | number;
+  title: string;
+  link?: string;
+  pmc_id?: string;
+  keywords?: string[];
+}
 
 export default function PlanetDetail() {
   const params = useParams();
   const planetId = params.id as string;
+  const [query, setQuery] = useState('');
+  const [papers, setPapers] = useState<Paper[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!query.trim()) return;
+
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/papers?q=${encodeURIComponent(query)}`);
+      const data = await response.json();
+      setPapers(data.papers || data.results || data || []);
+    } catch (error) {
+      console.error('Failed to fetch papers:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Planet #3 - About Us Page
   if (planetId === '3') {
@@ -21,13 +51,6 @@ export default function PlanetDetail() {
           />
         </section>
 
-        {/* RESOURCES Section */}
-        <section className="py-12 md:py-16 px-4 md:px-6 lg:px-8 border-b border-gray-300">
-          <div className="max-w-[1280px] mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl mb-8">RESOURCES</h2>
-          </div>
-        </section>
-
         {/* Star Keys + Alien Section */}
         <section className="border-b border-gray-300">
           <div className="max-w-[1280px] mx-auto">
@@ -35,10 +58,16 @@ export default function PlanetDetail() {
               {/* Star Keys Text */}
               <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center">
                 <h3 className="text-2xl md:text-3xl mb-6">Star Keys</h3>
-                <div className="space-y-4 text-sm md:text-base">
-                  <p>Hi, I&apos;m Deon Overfelt. I used to be a card-carrying member of the &apos;Meat Lovers&apos; Club.&apos;</p>
-                  <p>Then, I wondered...what if I tried going vegan? For a year? So I did.</p>
-                  <p className="text-xs text-gray-600">(team intro)</p>
+                <div className="space-y-4 text-sm md:text-base leading-relaxed">
+                  <p>
+                    Hey, Earth friends! We&apos;re Star Keys — five cosmic explorers unlocking life&apos;s secrets.
+                  </p>
+                  <p>
+                    Our name comes from our mission: to find the hidden keys of life scattered across the stars. Each discovery is a key, opening another mystery of the universe.
+                  </p>
+                  <p>
+                    Our creation, the Space Biology Library, was built for the NASA Space Apps Challenge — a place where any curious Earthling can explore astrobiology and design their own space quests.
+                  </p>
                 </div>
               </div>
 
@@ -57,28 +86,28 @@ export default function PlanetDetail() {
         <section className="border-b border-gray-300">
           <div className="max-w-[1280px] mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-300">
-              <a href="#" className="p-6 md:p-8 text-center hover:bg-gray-50 transition text-sm md:text-base">
+              <a href="https://science.nasa.gov/biological-physical/data/" target="_blank" rel="noopener noreferrer" className="p-6 md:p-8 text-center hover:bg-gray-50 transition text-sm md:text-base underline">
                 NASA Open Science Data Repository
               </a>
-              <a href="#" className="p-6 md:p-8 text-center hover:bg-gray-50 transition text-sm md:text-base">
+              <a href="https://public.ksc.nasa.gov/nslsl/" target="_blank" rel="noopener noreferrer" className="p-6 md:p-8 text-center hover:bg-gray-50 transition text-sm md:text-base underline">
                 NASA Space Life Sciences Library
               </a>
-              <a href="#" className="p-6 md:p-8 text-center hover:bg-gray-50 transition text-sm md:text-base">
+              <a href="https://taskbook.nasaprs.com/tbp/welcome.cfm" target="_blank" rel="noopener noreferrer" className="p-6 md:p-8 text-center hover:bg-gray-50 transition text-sm md:text-base underline">
                 NASA Task Book
               </a>
             </div>
             <div className="border-t border-gray-300">
-              <a href="#" className="block p-6 md:p-8 text-center hover:bg-gray-50 transition text-sm md:text-base">
+              <a href="https://github.com/jgalazka/SB_publications/tree/main" target="_blank" rel="noopener noreferrer" className="block p-6 md:p-8 text-center hover:bg-gray-50 transition text-sm md:text-base underline">
                 Open-Access Space Biology Publications
               </a>
             </div>
           </div>
         </section>
 
-        {/* About Us Section */}
-        <section id="about" className="py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8">
+        {/* Footer */}
+        <section className="py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8">
           <div className="max-w-[1280px] mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl mb-6 md:mb-8">About Us</h2>
+            <p className="text-sm md:text-base">Star Keys × NASA Space Apps Challenge 2025</p>
           </div>
         </section>
       </main>
@@ -96,41 +125,72 @@ export default function PlanetDetail() {
       {/* Search Tool Section */}
       <section className="border-b border-gray-300 bg-gray-50 py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8">
         <div className="max-w-[1280px] mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl mb-2">(Search tool)</h1>
-          <p className="text-sm text-gray-600">(text)</p>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl mb-8">Search Papers</h1>
+          {/* Search Form */}
+          <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
+            <div className="flex flex-col sm:flex-row gap-2">
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search for papers..."
+                className="flex-1 px-4 py-3 border-2 border-gray-300 bg-white text-sm focus:outline-none focus:border-blue-500"
+              />
+              <button
+                type="submit"
+                disabled={loading}
+                className="px-6 md:px-8 py-3 bg-black text-white text-sm hover:bg-gray-800 disabled:bg-gray-400 whitespace-nowrap"
+              >
+                {loading ? 'Searching...' : 'Search'}
+              </button>
+            </div>
+          </form>
         </div>
       </section>
 
-      {/* INGREDIENTS Section */}
-      <section className="py-12 md:py-16 px-4 md:px-6 lg:px-8 border-b border-gray-300">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl mb-8">INGREDIENTS</h2>
-          <div className="space-y-3 text-sm md:text-base">
-            <p>Olive Oil</p>
-            <p>Fresh Basil</p>
-            <p>Vegan Mozzarella</p>
-            <p>Salt</p>
-            <p>Pepper</p>
-            <p>Black Vinegar</p>
-            <p>Tomatoes</p>
+      {/* Search Results */}
+      {papers.length > 0 && (
+        <section className="py-12 md:py-16 px-4 md:px-6 lg:px-8 border-b border-gray-300">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-2xl md:text-3xl mb-8 text-center">Search Results</h2>
+            <div className="space-y-6">
+              {papers.map((paper, index) => {
+                const paperId = paper._id?.$oid || paper.pmc_id || paper.id || index;
+                return (
+                  <Link
+                    key={paperId}
+                    href={`/planet/${planetId}/paper/${paperId}`}
+                    className="block p-6 border border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition"
+                  >
+                    <h3 className="text-lg md:text-xl font-medium mb-3">{paper.title}</h3>
+
+                    {paper.keywords && paper.keywords.length > 0 && (
+                      <div className="mb-3 flex flex-wrap gap-2">
+                        {paper.keywords.map((keyword, i) => (
+                          <span key={i} className="px-2 py-1 bg-gray-100 text-xs border border-gray-300">
+                            {keyword}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                      {paper.pmc_id && (
+                        <span>PMC ID: {paper.pmc_id}</span>
+                      )}
+                      {paper.link && (
+                        <span className="underline">View Details →</span>
+                      )}
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* STEPS Section */}
-      <section className="py-12 md:py-16 px-4 md:px-6 lg:px-8 border-b border-gray-300">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl mb-8">STEPS</h2>
-          <div className="space-y-4 text-sm md:text-base text-left">
-            <p>1. In a bowl, combine the halved tomatoes, torn basil leaves, and vegan mozzarella.</p>
-            <p>2. Drizzle with olive oil and balsamic vinegar.</p>
-            <p>3. Toss gently to combine.</p>
-            <p>4. Season with salt and pepper to taste.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Navigation to other Planets */}
+         {/* Navigation to other Planets */}
       <section className="border-t border-gray-300">
         <div className="max-w-[1280px] mx-auto">
           <div className="grid grid-cols-2 divide-x divide-gray-300 border-b border-gray-300">
@@ -168,7 +228,7 @@ export default function PlanetDetail() {
                 </div>
                 <span className="text-2xl md:text-3xl">→</span>
               </div>
-              <p className="text-xs">Search by</p>
+              <p className="text-xs">About Us</p>
               <Image
                 src={planetId === '1' ? '/image 98.png' : planetId === '2' ? '/image 100.png' : '/image 99.png'}
                 alt="Next Planet"
@@ -178,13 +238,6 @@ export default function PlanetDetail() {
               />
             </a>
           </div>
-        </div>
-      </section>
-
-      {/* About Us Section */}
-      <section id="about" className="py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8">
-        <div className="max-w-[1280px] mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl mb-6 md:mb-8">About Us</h2>
         </div>
       </section>
     </main>
