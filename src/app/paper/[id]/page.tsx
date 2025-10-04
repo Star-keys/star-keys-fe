@@ -63,74 +63,83 @@ export default function PaperDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen p-8 max-w-4xl mx-auto">
-        <p className="text-gray-600">논문 정보를 불러오는 중...</p>
+      <div className="min-h-screen p-8">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-gray-600">Loading paper information...</p>
+        </div>
       </div>
     );
   }
 
   if (error && !paper) {
     return (
-      <div className="min-h-screen p-8 max-w-4xl mx-auto">
-        <a href="/" className="text-blue-500 hover:underline mb-4 inline-block">
-          ← 검색으로 돌아가기
-        </a>
-        <div className="p-4 bg-red-100 text-red-700 rounded-lg">
-          {error}
+      <div className="min-h-screen p-8">
+        <div className="max-w-4xl mx-auto">
+          <a href="/" className="inline-block mb-6 text-sm hover:underline">← Back to Home</a>
+          <div className="p-6 bg-red-50 border-2 border-red-300 text-red-700">
+            {error}
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-8 max-w-4xl mx-auto">
-      <a href="/" className="text-blue-500 hover:underline mb-6 inline-block">
-        ← 검색으로 돌아가기
-      </a>
+    <div className="min-h-screen bg-white">
+      <div className="max-w-4xl mx-auto p-8">
+        <a href="/" className="inline-block mb-8 text-sm hover:underline">← Back to Home</a>
 
-      {paper && (
+        {paper && (
+          <div className="mb-12">
+            <div className="border-2 border-gray-300 p-8 mb-8 bg-white">
+              <h1 className="text-3xl mb-6 leading-tight">{paper.title}</h1>
+
+              <div className="grid grid-cols-3 gap-6 text-sm border-t border-gray-200 pt-6">
+                <div>
+                  <p className="text-gray-500 mb-1">AUTHORS</p>
+                  <p>{paper.authors}</p>
+                </div>
+                <div>
+                  <p className="text-gray-500 mb-1">YEAR</p>
+                  <p>{paper.year}</p>
+                </div>
+                <div>
+                  <p className="text-gray-500 mb-1">ID</p>
+                  <p>{paper.id}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-2 border-gray-300 p-8 mb-8 bg-gray-50">
+              <h2 className="text-xl mb-4">CONTENT</h2>
+              <p className="whitespace-pre-wrap leading-relaxed text-sm">{paper.content}</p>
+            </div>
+          </div>
+        )}
+
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-4">{paper.title}</h1>
+          <button
+            onClick={handleSummarize}
+            disabled={summaryLoading}
+            className="px-8 py-3 bg-black text-white hover:bg-gray-800 disabled:bg-gray-400"
+          >
+            {summaryLoading ? 'Generating Summary...' : 'Generate AI Summary'}
+          </button>
+        </div>
 
-          <div className="space-y-2 mb-6">
-            <p className="text-gray-700">
-              <span className="font-semibold">저자:</span> {paper.authors}
-            </p>
-            <p className="text-gray-700">
-              <span className="font-semibold">발행년도:</span> {paper.year}
-            </p>
-            <p className="text-gray-700">
-              <span className="font-semibold">ID:</span> {paper.id}
-            </p>
+        {error && paper && (
+          <div className="p-6 bg-red-50 border-2 border-red-300 text-red-700 mb-8 text-sm">
+            {error}
           </div>
+        )}
 
-          <div className="p-6 bg-gray-50 rounded-lg mb-6">
-            <h2 className="text-xl font-semibold mb-3">내용</h2>
-            <p className="whitespace-pre-wrap text-gray-800">{paper.content}</p>
+        {summary && (
+          <div className="p-8 border-2 border-blue-600 bg-blue-50">
+            <h2 className="text-xl mb-6">AI SUMMARY</h2>
+            <p className="whitespace-pre-wrap leading-relaxed text-sm">{summary}</p>
           </div>
-        </div>
-      )}
-
-      <button
-        onClick={handleSummarize}
-        disabled={summaryLoading}
-        className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-400 mb-6"
-      >
-        {summaryLoading ? '요약 생성 중...' : '논문 요약하기'}
-      </button>
-
-      {error && paper && (
-        <div className="p-4 bg-red-100 text-red-700 rounded-lg mb-6">
-          {error}
-        </div>
-      )}
-
-      {summary && (
-        <div className="p-6 bg-blue-50 rounded-lg border-2 border-blue-200">
-          <h2 className="text-xl font-semibold mb-4 text-blue-900">AI 요약</h2>
-          <p className="whitespace-pre-wrap text-gray-800">{summary}</p>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
