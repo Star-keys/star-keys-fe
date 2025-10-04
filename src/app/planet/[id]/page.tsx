@@ -6,6 +6,84 @@ export default function PlanetDetail() {
   const params = useParams();
   const planetId = params.id as string;
 
+  // Planet #3 - About Us Page
+  if (planetId === '3') {
+    return (
+      <main className="min-h-screen bg-white">
+        {/* NASA Space Apps Banner */}
+        <section className="w-full h-[400px] md:h-[500px] lg:h-[600px]">
+          <img
+            src="/image 343.png"
+            alt="Earth"
+            className="w-full h-full object-cover"
+          />
+        </section>
+
+        {/* RESOURCES Section */}
+        <section className="py-12 md:py-16 px-4 md:px-6 lg:px-8 border-b border-gray-300">
+          <div className="max-w-[1280px] mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl mb-8">RESOURCES</h2>
+          </div>
+        </section>
+
+        {/* Star Keys + Alien Section */}
+        <section className="border-b border-gray-300">
+          <div className="max-w-[1280px] mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-300">
+              {/* Star Keys Text */}
+              <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center">
+                <h3 className="text-2xl md:text-3xl mb-6">Star Keys</h3>
+                <div className="space-y-4 text-sm md:text-base">
+                  <p>Hi, I'm Deon Overfelt. I used to be a card-carrying member of the 'Meat Lovers' Club.'</p>
+                  <p>Then, I wondered...what if I tried going vegan? For a year? So I did.</p>
+                  <p className="text-xs text-gray-600">(team intro)</p>
+                </div>
+              </div>
+
+              {/* Alien Image */}
+              <div className="p-8 md:p-12 lg:p-16 flex flex-col items-center justify-center gap-6">
+                <img src="/image 98.png" alt="Alien" className="w-32 h-32 md:w-40 md:h-40 object-contain" />
+                <button className="px-6 py-2 border-2 border-black hover:bg-gray-100 transition text-sm">
+                  Email us ↗
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* NASA Links Section */}
+        <section className="border-b border-gray-300">
+          <div className="max-w-[1280px] mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-300">
+              <a href="#" className="p-6 md:p-8 text-center hover:bg-gray-50 transition text-sm md:text-base">
+                NASA Open Science Data Repository
+              </a>
+              <a href="#" className="p-6 md:p-8 text-center hover:bg-gray-50 transition text-sm md:text-base">
+                NASA Space Life Sciences Library
+              </a>
+              <a href="#" className="p-6 md:p-8 text-center hover:bg-gray-50 transition text-sm md:text-base">
+                NASA Task Book
+              </a>
+            </div>
+            <div className="border-t border-gray-300">
+              <a href="#" className="block p-6 md:p-8 text-center hover:bg-gray-50 transition text-sm md:text-base">
+                Open-Access Space Biology Publications
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* About Us Section */}
+        <section id="about" className="py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8">
+          <div className="max-w-[1280px] mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl mb-6 md:mb-8">About Us</h2>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
+  // Planet #1 and #2 - Recipe style pages
   return (
     <main className="min-h-screen bg-white">
       {/* Header with Planet number */}

@@ -33,10 +33,22 @@ export default function RootLayout({
         </header>
 
         {/* Mood Bar */}
-        <div className="border-b border-gray-300 bg-gray-50 px-4 md:px-6 py-2">
-          <div className="max-w-[1280px] mx-auto flex items-center justify-center gap-2 text-xs md:text-sm">
-            <span>☼</span>
-            <span>Today's Mood: Sunny</span>
+        <div className="border-b border-gray-300 bg-gray-50 py-2 overflow-hidden relative">
+          <div className="animate-scroll flex whitespace-nowrap text-xs md:text-sm">
+            <div className="flex shrink-0">
+              <span className="inline-block px-8">☼ Today's Mood: Sunny</span>
+              <span className="inline-block px-8">☼ Today's Mood: Sunny</span>
+              <span className="inline-block px-8">☼ Today's Mood: Sunny</span>
+              <span className="inline-block px-8">☼ Today's Mood: Sunny</span>
+              <span className="inline-block px-8">☼ Today's Mood: Sunny</span>
+            </div>
+            <div className="flex shrink-0">
+              <span className="inline-block px-8">☼ Today's Mood: Sunny</span>
+              <span className="inline-block px-8">☼ Today's Mood: Sunny</span>
+              <span className="inline-block px-8">☼ Today's Mood: Sunny</span>
+              <span className="inline-block px-8">☼ Today's Mood: Sunny</span>
+              <span className="inline-block px-8">☼ Today's Mood: Sunny</span>
+            </div>
           </div>
         </div>
 
