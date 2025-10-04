@@ -63,9 +63,9 @@ export default function PaperDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen p-8">
-        <div className="max-w-4xl mx-auto">
-          <p className="text-gray-600">Loading paper information...</p>
+      <div className="min-h-screen bg-white">
+        <div className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-8">
+          <p className="text-gray-600 text-sm md:text-base">Loading paper information...</p>
         </div>
       </div>
     );
@@ -73,10 +73,10 @@ export default function PaperDetail() {
 
   if (error && !paper) {
     return (
-      <div className="min-h-screen p-8">
-        <div className="max-w-4xl mx-auto">
-          <a href="/" className="inline-block mb-6 text-sm hover:underline">← Back to Home</a>
-          <div className="p-6 bg-red-50 border-2 border-red-300 text-red-700">
+      <div className="min-h-screen bg-white">
+        <div className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-8">
+          <a href="/" className="inline-block mb-6 text-xs md:text-sm hover:underline">← Back to Home</a>
+          <div className="p-4 md:p-6 bg-red-50 border-2 border-red-300 text-red-700 text-xs md:text-sm">
             {error}
           </div>
         </div>
@@ -86,18 +86,18 @@ export default function PaperDetail() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-4xl mx-auto p-8">
-        <a href="/" className="inline-block mb-8 text-sm hover:underline">← Back to Home</a>
+      <div className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-8">
+        <a href="/" className="inline-block mb-6 md:mb-8 text-xs md:text-sm hover:underline">← Back to Home</a>
 
         {paper && (
-          <div className="mb-12">
-            <div className="border-2 border-gray-300 p-8 mb-8 bg-white">
-              <h1 className="text-3xl mb-6 leading-tight">{paper.title}</h1>
+          <div className="mb-8 md:mb-12">
+            <div className="border-2 border-gray-300 p-4 md:p-6 lg:p-8 mb-6 md:mb-8 bg-white">
+              <h1 className="text-xl md:text-2xl lg:text-3xl mb-4 md:mb-6 leading-tight">{paper.title}</h1>
 
-              <div className="grid grid-cols-3 gap-6 text-sm border-t border-gray-200 pt-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 text-xs md:text-sm border-t border-gray-200 pt-4 md:pt-6">
                 <div>
                   <p className="text-gray-500 mb-1">AUTHORS</p>
-                  <p>{paper.authors}</p>
+                  <p className="break-words">{paper.authors}</p>
                 </div>
                 <div>
                   <p className="text-gray-500 mb-1">YEAR</p>
@@ -105,38 +105,38 @@ export default function PaperDetail() {
                 </div>
                 <div>
                   <p className="text-gray-500 mb-1">ID</p>
-                  <p>{paper.id}</p>
+                  <p className="break-all">{paper.id}</p>
                 </div>
               </div>
             </div>
 
-            <div className="border-2 border-gray-300 p-8 mb-8 bg-gray-50">
-              <h2 className="text-xl mb-4">CONTENT</h2>
-              <p className="whitespace-pre-wrap leading-relaxed text-sm">{paper.content}</p>
+            <div className="border-2 border-gray-300 p-4 md:p-6 lg:p-8 mb-6 md:mb-8 bg-gray-50">
+              <h2 className="text-lg md:text-xl mb-3 md:mb-4">CONTENT</h2>
+              <p className="whitespace-pre-wrap leading-relaxed text-xs md:text-sm">{paper.content}</p>
             </div>
           </div>
         )}
 
-        <div className="mb-8">
+        <div className="mb-6 md:mb-8">
           <button
             onClick={handleSummarize}
             disabled={summaryLoading}
-            className="px-8 py-3 bg-black text-white hover:bg-gray-800 disabled:bg-gray-400"
+            className="w-full md:w-auto px-6 md:px-8 py-3 bg-black text-white text-sm hover:bg-gray-800 disabled:bg-gray-400"
           >
             {summaryLoading ? 'Generating Summary...' : 'Generate AI Summary'}
           </button>
         </div>
 
         {error && paper && (
-          <div className="p-6 bg-red-50 border-2 border-red-300 text-red-700 mb-8 text-sm">
+          <div className="p-4 md:p-6 bg-red-50 border-2 border-red-300 text-red-700 mb-6 md:mb-8 text-xs md:text-sm">
             {error}
           </div>
         )}
 
         {summary && (
-          <div className="p-8 border-2 border-blue-600 bg-blue-50">
-            <h2 className="text-xl mb-6">AI SUMMARY</h2>
-            <p className="whitespace-pre-wrap leading-relaxed text-sm">{summary}</p>
+          <div className="p-4 md:p-6 lg:p-8 border-2 border-blue-600 bg-blue-50">
+            <h2 className="text-lg md:text-xl mb-4 md:mb-6">AI SUMMARY</h2>
+            <p className="whitespace-pre-wrap leading-relaxed text-xs md:text-sm">{summary}</p>
           </div>
         )}
       </div>
