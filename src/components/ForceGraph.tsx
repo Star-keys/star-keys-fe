@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import type { GraphData, GraphNode, SimulationNode, SimulationLink, GraphLink } from '@/types/paper';
+import type { GraphData, GraphNode, SimulationNode, SimulationLink } from '@/types/paper';
 import { getNodeColor } from '@/utils/graphUtils';
 
 interface ForceGraphProps {
@@ -38,11 +38,6 @@ export default function ForceGraph({ data, width = 1200, height = 800 }: ForceGr
     d3.select(svgRef.current).selectAll('*').remove();
 
     const svg = d3.select(svgRef.current);
-
-    // Store references for later updates
-    let nodeSelection: d3.Selection<SVGCircleElement, SimulationNode, SVGGElement, unknown>;
-    let linkSelection: d3.Selection<SVGLineElement, SimulationLink, SVGGElement, unknown>;
-    let labelsSelection: d3.Selection<SVGTextElement, SimulationNode, SVGGElement, unknown>;
 
     // Create main group for zoom/pan
     const g = svg.append('g');
@@ -91,7 +86,7 @@ export default function ForceGraph({ data, width = 1200, height = 800 }: ForceGr
       .attr('fill', '#999');
 
     // Create links
-    linkSelection = g.append('g')
+    const link = g.append('g')
       .attr('class', 'links')
       .selectAll('line')
       .data<SimulationLink>(data.links as SimulationLink[])
@@ -101,7 +96,7 @@ export default function ForceGraph({ data, width = 1200, height = 800 }: ForceGr
       .attr('stroke-width', (d) => Math.sqrt(d.value) * 2);
 
     // Create nodes
-    nodeSelection = g.append('g')
+    const node = g.append('g')
       .attr('class', 'nodes')
       .selectAll('circle')
       .data<SimulationNode>(data.nodes as SimulationNode[])
@@ -118,7 +113,7 @@ export default function ForceGraph({ data, width = 1200, height = 800 }: ForceGr
       );
 
     // Add labels
-    labelsSelection = g.append('g')
+    const labels = g.append('g')
       .attr('class', 'labels')
       .selectAll('text')
       .data<SimulationNode>(data.nodes as SimulationNode[])
@@ -129,10 +124,6 @@ export default function ForceGraph({ data, width = 1200, height = 800 }: ForceGr
       .attr('dy', 4)
       .style('pointer-events', 'none')
       .style('user-select', 'none');
-
-    const link = linkSelection;
-    const node = nodeSelection;
-    const labels = labelsSelection;
 
     // Add tooltips
     const tooltip = d3.select('body').append('div')
@@ -167,31 +158,6 @@ export default function ForceGraph({ data, width = 1200, height = 800 }: ForceGr
       return connectedIds;
     }
 
-    // Function to apply focus mode
-    function applyFocusMode(nodeId: string | null) {
-      if (!nodeId) {
-        // Normal mode - show all
-        node.style('display', 'block').style('opacity', 1);
-        link.style('display', 'block').style('opacity', 0.6);
-        labels.style('display', 'block').style('opacity', 1);
-        return;
-      }
-
-      // Focus mode - show only connected nodes
-      const connectedIds = getConnectedNodeIds(nodeId);
-
-      node.style('display', (d) => connectedIds.has(d.id) ? 'block' : 'none')
-          .style('opacity', 1);
-
-      link.style('display', (l) => {
-        const sourceId = typeof l.source === 'string' ? l.source : (l.source as SimulationNode).id;
-        const targetId = typeof l.target === 'string' ? l.target : (l.target as SimulationNode).id;
-        return (sourceId === nodeId || targetId === nodeId) ? 'block' : 'none';
-      }).style('opacity', 0.6);
-
-      labels.style('display', (d) => connectedIds.has(d.id) ? 'block' : 'none')
-            .style('opacity', 1);
-    }
 
     node
       .on('mouseover', function(event, d) {
@@ -331,7 +297,7 @@ export default function ForceGraph({ data, width = 1200, height = 800 }: ForceGr
         })
         .style('opacity', 1);
     }
-  }, [focusedNodeId, data.links]);
+  }, [focusedNodeId, data.links, focusMode]);
 
   return (
     <div className="relative">

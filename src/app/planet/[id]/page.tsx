@@ -1,6 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
 
 export default function PlanetDetail() {
   const params = useParams();
@@ -11,11 +12,12 @@ export default function PlanetDetail() {
     return (
       <main className="min-h-screen bg-white">
         {/* NASA Space Apps Banner */}
-        <section className="w-full h-[400px] md:h-[500px] lg:h-[600px]">
-          <img
+        <section className="w-full h-[400px] md:h-[500px] lg:h-[600px] relative">
+          <Image
             src="/image 343.png"
             alt="Earth"
-            className="w-full h-full object-cover object-[center_10%]"
+            fill
+            className="object-cover object-[center_10%]"
           />
         </section>
 
@@ -42,7 +44,7 @@ export default function PlanetDetail() {
 
               {/* Alien Image */}
               <div className="p-8 md:p-12 lg:p-16 flex flex-col items-center justify-center gap-6">
-                <img src="/image 98.png" alt="Alien" className="w-32 h-32 md:w-40 md:h-40 object-contain" />
+                <Image src="/image 98.png" alt="Alien" width={160} height={160} className="w-32 h-32 md:w-40 md:h-40 object-contain" />
                 <button className="px-6 py-2 border-2 border-black hover:bg-gray-100 transition text-sm">
                   Email us ↗
                 </button>
@@ -145,9 +147,11 @@ export default function PlanetDetail() {
                 </div>
               </div>
               <p className="text-xs">Search by</p>
-              <img
+              <Image
                 src={planetId === '1' ? '/image 100.png' : planetId === '2' ? '/image 99.png' : '/image 98.png'}
                 alt="Previous Planet"
+                width={80}
+                height={80}
                 className="w-16 h-16 md:w-20 md:h-20 object-contain"
               />
             </a>
@@ -165,9 +169,11 @@ export default function PlanetDetail() {
                 <span className="text-2xl md:text-3xl">→</span>
               </div>
               <p className="text-xs">Search by</p>
-              <img
+              <Image
                 src={planetId === '1' ? '/image 98.png' : planetId === '2' ? '/image 100.png' : '/image 99.png'}
                 alt="Next Planet"
+                width={80}
+                height={80}
                 className="w-16 h-16 md:w-20 md:h-20 object-contain"
               />
             </a>
