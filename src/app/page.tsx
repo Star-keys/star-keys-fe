@@ -122,29 +122,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Papers Results */}
-      {papers.length > 0 && (
-        <section className="py-8 md:py-12 px-4 md:px-6 lg:px-8 bg-gray-50">
-          <div className="max-w-[1280px] mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-              {papers.map((paper, index) => (
-                <Link
-                  key={paper.id || index}
-                  href={`/paper/${paper.id || index}`}
-                  className="p-4 md:p-6 border-2 border-gray-300 bg-white hover:border-black transition"
-                >
-                  <p className="text-xs text-gray-500 mb-1">Entry</p>
-                  <p className="text-base md:text-lg mb-2 md:mb-3">#{String(index + 4).padStart(2, '0')}</p>
-                  <h3 className="text-sm md:text-base mb-2 md:mb-3 hover:underline line-clamp-2">{paper.title}</h3>
-                  <p className="text-xs mb-2">Search by</p>
-                  <div className="text-lg md:text-xl text-gray-400">↘</div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* About Us Section */}
       <section id="about" className="py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8">
         <div className="max-w-[1280px] mx-auto text-center">
