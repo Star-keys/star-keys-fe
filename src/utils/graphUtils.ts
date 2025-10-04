@@ -15,10 +15,10 @@ function getCommonKeywordsCount(keywords1: string[], keywords2: string[]): numbe
 export function transformToGraphData(papers: Paper[]): GraphData {
   // Create nodes
   const nodes: GraphNode[] = papers.map((paper) => ({
-    id: paper._id.$oid,
+    id: paper.id,
     title: paper.title,
     link: paper.link,
-    pmc_id: paper.pmc_id,
+    pmcId: paper.pmcId,
     keywords: paper.keywords,
     keywordCount: paper.keywords.length,
   }));
@@ -36,8 +36,8 @@ export function transformToGraphData(papers: Paper[]): GraphData {
       // Only create link if papers have at least one common keyword
       if (commonCount > 0) {
         links.push({
-          source: papers[i]._id.$oid,
-          target: papers[j]._id.$oid,
+          source: papers[i].id,
+          target: papers[j].id,
           value: commonCount,
         });
       }

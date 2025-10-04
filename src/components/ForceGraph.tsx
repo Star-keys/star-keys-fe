@@ -165,7 +165,7 @@ export default function ForceGraph({ data, width = 1200, height = 800 }: ForceGr
           tooltip.style('visibility', 'visible')
             .html(`
               <strong>${d.title}</strong><br/>
-              <small>PMC ID: ${d.pmc_id}</small><br/>
+              <small>PMC ID: ${d.pmcId}</small><br/>
               <small>Keywords: ${d.keywords.join(', ')}</small>
             `);
         }
@@ -329,7 +329,7 @@ export default function ForceGraph({ data, width = 1200, height = 800 }: ForceGr
               ✕
             </button>
           </div>
-          <p className="text-sm text-gray-600 mb-2">PMC ID: {selectedNode.pmc_id}</p>
+          <p className="text-sm text-gray-600 mb-2">PMC ID: {selectedNode.pmcId}</p>
           <a
             href={selectedNode.link}
             target="_blank"

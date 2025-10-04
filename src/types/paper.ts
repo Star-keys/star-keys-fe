@@ -1,10 +1,8 @@
 export interface Paper {
-  _id: {
-    $oid: string;
-  };
+  id: string;
   title: string;
   link: string;
-  pmc_id: string;
+  pmcId: string;
   keywords: string[];
 }
 
@@ -12,7 +10,7 @@ export interface GraphNode {
   id: string;
   title: string;
   link: string;
-  pmc_id: string;
+  pmcId: string;
   keywords: string[];
   keywordCount: number;
 }
