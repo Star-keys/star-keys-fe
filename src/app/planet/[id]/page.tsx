@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -20,6 +20,8 @@ export default function PlanetDetail() {
   const [query, setQuery] = useState('');
   const [papers, setPapers] = useState<Paper[]>([]);
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 15;
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +38,26 @@ export default function PlanetDetail() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const savedQuery = localStorage.getItem('searchQuery');
+    if (savedQuery) {
+      setQuery(savedQuery);
+      setLoading(true);
+      fetch(`/api/papers?q=${encodeURIComponent(savedQuery)}`)
+        .then(res => res.json())
+        .then(data => {
+          setPapers(data.papers || data.results || data || []);
+        })
+        .catch(error => {
+          console.error('Failed to fetch papers:', error);
+        })
+        .finally(() => {
+          setLoading(false);
+          localStorage.removeItem('searchQuery');
+        });
+    }
+  }, []);
 
   // Planet #3 - About Us Page
   if (planetId === '3') {

@@ -19,16 +19,8 @@ export default function Home() {
     e.preventDefault();
     if (!query.trim()) return;
 
-    setLoading(true);
-    try {
-      const response = await fetch(`/api/papers?q=${encodeURIComponent(query)}`);
-      const data = await response.json();
-      setPapers(data.papers || data.results || data || []);
-    } catch (error) {
-      console.error('Failed to fetch papers:', error);
-    } finally {
-      setLoading(false);
-    }
+    localStorage.setItem('searchQuery', query);
+    window.location.href = '/planet/1';
   };
 
   return (
@@ -107,7 +99,7 @@ export default function Home() {
             </div>
 
             {/* Planet #03 */}
-            <Link href="/planet/2" className="p-8 md:p-10 lg:p-12 text-center bg-white hover:bg-gray-50 cursor-pointer block">
+            <Link href="/planet/3" className="p-8 md:p-10 lg:p-12 text-center bg-white hover:bg-gray-50 cursor-pointer block">
               <div className="mb-4">
                 <p className="text-xs mb-1">Planet</p>
                 <p className="text-base md:text-lg">#03</p>
