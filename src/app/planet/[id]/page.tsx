@@ -28,6 +28,7 @@ export default function PlanetDetail() {
     if (!query.trim()) return;
 
     setLoading(true);
+    setCurrentPage(1);
     try {
       const response = await fetch(`/api/papers?q=${encodeURIComponent(query)}`);
       const data = await response.json();
@@ -39,10 +40,17 @@ export default function PlanetDetail() {
     }
   };
 
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentPapers = papers.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(papers.length / itemsPerPage);
+
   useEffect(() => {
     const savedQuery = localStorage.getItem('searchQuery');
     if (savedQuery) {
       setQuery(savedQuery);
+      setCurrentPage(1);
       setLoading(true);
       fetch(`/api/papers?q=${encodeURIComponent(savedQuery)}`)
         .then(res => res.json())
@@ -174,9 +182,11 @@ export default function PlanetDetail() {
       {papers.length > 0 && (
         <section className="py-12 md:py-16 px-4 md:px-6 lg:px-8 border-b border-gray-300">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl md:text-3xl mb-8 text-center">Search Results</h2>
+            <h2 className="text-2xl md:text-3xl mb-8 text-center">
+              Search Results ({papers.length})
+            </h2>
             <div className="space-y-6">
-              {papers.map((paper, index) => {
+              {currentPapers.map((paper, index) => {
                 const paperId = paper._id?.$oid || paper.pmc_id || paper.id || index;
                 return (
                   <Link
@@ -208,6 +218,33 @@ export default function PlanetDetail() {
                 );
               })}
             </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="mt-12 flex justify-center items-center gap-2">
+                <button
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 text-sm"
+                >
+                  ←
+                </button>
+
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-600">
+                    Page {currentPage} of {totalPages}
+                  </span>
+                </div>
+
+                <button
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 text-sm"
+                >
+                  →
+                </button>
+              </div>
+            )}
           </div>
         </section>
       )}
