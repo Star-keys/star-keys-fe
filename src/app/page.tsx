@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import PaperNetworkGraph from '@/components/PaperNetworkGraph';
 
 interface Paper {
   id?: string | number;
@@ -66,6 +67,12 @@ export default function Home() {
 
       {/* Graph Section */}
       <section className="border-t border-b border-gray-300 bg-gray-50 py-12 md:py-16 lg:py-20 px-4 md:px-6 lg:px-8">
+        <div className="max-w-[1280px] mx-auto">
+          <h2 className="text-2xl md:text-3xl mb-8 text-center">Paper Network</h2>
+          <div className="flex justify-center">
+            <PaperNetworkGraph width={1200} height={600} />
+          </div>
+        </div>
       </section>
 
       {/* Planet Categories */}

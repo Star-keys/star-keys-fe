@@ -1,31 +1,24 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
+import { readFile } from "fs/promises";
+import { join } from "path";
+import type { Paper } from "@/types/paper";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080';
-
-export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
-  const query = searchParams.get('q');
-
+export async function GET() {
   try {
-    const url = query
-      ? `${API_BASE_URL}/api/papers?q=${encodeURIComponent(query)}`
-      : `${API_BASE_URL}/api/papers`;
+    const filePath = join(process.cwd(), "dummy-paper.json"); // TODO api call
+    const fileContents = await readFile(filePath, "utf8");
+    const allPapers: Paper[] = JSON.parse(fileContents);
 
-    const response = await fetch(url);
+    // Filter papers that have keywords
+    const papers = allPapers.filter(
+      (paper) => paper.keywords && paper.keywords.length > 0
+    );
 
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: 'API request failed' },
-        { status: response.status }
-      );
-    }
-
-    const data = await response.json();
-    return NextResponse.json(data);
+    return NextResponse.json({ papers });
   } catch (error) {
-    console.error('Papers API Error:', error);
+    console.error("Error reading papers:", error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: "Failed to load papers" },
       { status: 500 }
     );
   }
