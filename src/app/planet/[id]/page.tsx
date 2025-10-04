@@ -104,9 +104,9 @@ export default function PlanetDetail() {
               {/* Alien Image */}
               <div className="p-8 md:p-12 lg:p-16 flex flex-col items-center justify-center gap-6">
                 <Image src="/image 98.png" alt="Alien" width={160} height={160} className="w-32 h-32 md:w-40 md:h-40 object-contain" />
-                <button className="px-6 py-2 border-2 border-black hover:bg-gray-100 transition text-sm">
+                <a href="mailto:zoloman316@gmail.com" className="px-6 py-2 border-2 border-black hover:bg-gray-100 transition text-sm inline-block">
                   Email us ↗
-                </button>
+                </a>
               </div>
             </div>
           </div>
