@@ -15,7 +15,7 @@ export default function PlanetDetail() {
           <img
             src="/image 343.png"
             alt="Earth"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-[center_10%]"
           />
         </section>
 
