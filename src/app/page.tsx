@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import PaperNetworkGraph from '@/components/PaperNetworkGraph';
 
 interface Paper {
@@ -86,7 +87,7 @@ export default function Home() {
                 <p className="text-base md:text-lg">#01</p>
               </div>
               <div className="mb-4 md:mb-6 flex justify-center">
-                <img src="/image 99.png" alt="UFO" className="w-16 h-16 md:w-20 md:h-20 object-contain" />
+                <Image src="/image 99.png" alt="UFO" width={80} height={80} className="w-16 h-16 md:w-20 md:h-20 object-contain" />
               </div>
               <p className="text-xs mb-2 md:mb-3">Search by</p>
               <div className="text-xl md:text-2xl text-gray-400">↘</div>
@@ -99,7 +100,7 @@ export default function Home() {
                 <p className="text-base md:text-lg">#02</p>
               </div>
               <div className="mb-4 md:mb-6 flex justify-center">
-                <img src="/image 98.png" alt="Alien" className="w-16 h-16 md:w-20 md:h-20 object-contain" />
+                <Image src="/image 98.png" alt="Alien" width={80} height={80} className="w-16 h-16 md:w-20 md:h-20 object-contain" />
               </div>
               <p className="text-xs mb-2 md:mb-3">Search by</p>
               <div className="text-xl md:text-2xl text-gray-400">↘</div>
@@ -112,7 +113,7 @@ export default function Home() {
                 <p className="text-base md:text-lg">#03</p>
               </div>
               <div className="mb-4 md:mb-6 flex justify-center">
-                <img src="/image 100.png" alt="Rocket" className="w-16 h-16 md:w-20 md:h-20 object-contain" />
+                <Image src="/image 100.png" alt="Rocket" width={80} height={80} className="w-16 h-16 md:w-20 md:h-20 object-contain" />
               </div>
               <p className="text-xs mb-2 md:mb-3">Search by</p>
               <div className="text-xl md:text-2xl text-gray-400">↘</div>
