@@ -6,12 +6,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 interface Paper {
-  _id?: { $oid: string };
-  id?: string | number;
+  paperId: string;
   title: string;
-  link?: string;
-  pmc_id?: string;
-  keywords?: string[];
+  doi: string;
+  abstract: string;
+  fields: string[];
+}
+
+interface SearchResponse {
+  data: Paper[];
+  pageMeta: {
+    page: number;
+    limit: number;
+    total: number;
+  };
 }
 
 export default function PlanetDetail() {
@@ -20,50 +28,52 @@ export default function PlanetDetail() {
   const [query, setQuery] = useState('');
   const [papers, setPapers] = useState<Paper[]>([]);
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
   const itemsPerPage = 15;
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!query.trim()) return;
-
+  const fetchPapers = async (searchQuery: string, page: number) => {
     setLoading(true);
-    setCurrentPage(1);
     try {
-      const response = await fetch(`/api/papers?q=${encodeURIComponent(query)}`);
-      const data = await response.json();
-      setPapers(data.papers || data.results || data || []);
+      const response = await fetch(
+        `/api/search?q=${encodeURIComponent(searchQuery)}&page=${page}&size=${itemsPerPage}`
+      );
+      if (!response.ok) throw new Error('Search failed');
+
+      const data: SearchResponse = await response.json();
+      setPapers(data.data);
+      setTotalItems(data.pageMeta?.total || 0);
+      setTotalPages(Math.ceil((data.pageMeta?.total || 0) / itemsPerPage));
     } catch (error) {
       console.error('Failed to fetch papers:', error);
+      setPapers([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // Pagination logic
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentPapers = papers.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(papers.length / itemsPerPage);
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!query.trim()) return;
+
+    setCurrentPage(0);
+    await fetchPapers(query, 0);
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    fetchPapers(query, newPage);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   useEffect(() => {
     const savedQuery = localStorage.getItem('searchQuery');
     if (savedQuery) {
       setQuery(savedQuery);
-      setCurrentPage(1);
-      setLoading(true);
-      fetch(`/api/papers?q=${encodeURIComponent(savedQuery)}`)
-        .then(res => res.json())
-        .then(data => {
-          setPapers(data.papers || data.results || data || []);
-        })
-        .catch(error => {
-          console.error('Failed to fetch papers:', error);
-        })
-        .finally(() => {
-          setLoading(false);
-          localStorage.removeItem('searchQuery');
-        });
+      setCurrentPage(0);
+      fetchPapers(savedQuery, 0);
+      localStorage.removeItem('searchQuery');
     }
   }, []);
 
@@ -183,48 +193,43 @@ export default function PlanetDetail() {
         <section className="py-12 md:py-16 px-4 md:px-6 lg:px-8 border-b border-gray-300">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl md:text-3xl mb-8 text-center">
-              Search Results ({papers.length})
+              Search Results ({totalItems})
             </h2>
             <div className="space-y-6">
-              {currentPapers.map((paper, index) => {
-                const paperId = paper._id?.$oid || paper.pmc_id || paper.id || index;
-                return (
-                  <Link
-                    key={paperId}
-                    href={`/planet/${planetId}/paper/${paperId}`}
-                    className="block p-6 border border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition"
-                  >
-                    <h3 className="text-lg md:text-xl font-medium mb-3">{paper.title}</h3>
+              {papers.map((paper, index) => (
+                <Link
+                  key={paper.paperId || index}
+                  href={`/planet/${planetId}/paper/${paper.paperId}`}
+                  className="block p-6 border border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition"
+                >
+                  <h3 className="text-lg md:text-xl font-medium mb-3">{paper.title}</h3>
 
-                    {paper.keywords && paper.keywords.length > 0 && (
-                      <div className="mb-3 flex flex-wrap gap-2">
-                        {paper.keywords.map((keyword, i) => (
-                          <span key={i} className="px-2 py-1 bg-gray-100 text-xs border border-gray-300">
-                            {keyword}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-                      {paper.pmc_id && (
-                        <span>PMC ID: {paper.pmc_id}</span>
-                      )}
-                      {paper.link && (
-                        <span className="underline">View Details →</span>
-                      )}
+                  {paper.fields && paper.fields.length > 0 && (
+                    <div className="mb-3 flex flex-wrap gap-2">
+                      {paper.fields.map((field, i) => (
+                        <span key={i} className="px-2 py-1 bg-gray-100 text-xs border border-gray-300">
+                          {field}
+                        </span>
+                      ))}
                     </div>
-                  </Link>
-                );
-              })}
+                  )}
+
+                  <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                    {paper.doi && (
+                      <span>DOI: {paper.doi}</span>
+                    )}
+                    <span className="underline">View Details →</span>
+                  </div>
+                </Link>
+              ))}
             </div>
 
             {/* Pagination */}
             {totalPages > 1 && (
               <div className="mt-12 flex justify-center items-center gap-2">
                 <button
-                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                  disabled={currentPage === 1}
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 0}
                   className="px-4 py-2 border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 text-sm"
                 >
                   ←
@@ -232,13 +237,13 @@ export default function PlanetDetail() {
 
                 <div className="flex items-center gap-2">
                   <span className="text-sm text-gray-600">
-                    Page {currentPage} of {totalPages}
+                    Page {currentPage + 1} of {totalPages}
                   </span>
                 </div>
 
                 <button
-                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                  disabled={currentPage === totalPages}
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages - 1}
                   className="px-4 py-2 border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 text-sm"
                 >
                   →

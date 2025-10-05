@@ -6,6 +6,23 @@ export interface Paper {
   keywords: string[];
 }
 
+export interface SearchPaper {
+  paperId: string;
+  title: string;
+  doi: string;
+  abstract: string;
+  fields: string[];
+}
+
+export interface SearchResponse {
+  data: SearchPaper[];
+  pageMeta: {
+    page: number;
+    limit: number;
+    total: number;
+  };
+}
+
 export interface GraphNode {
   id: string;
   title: string;

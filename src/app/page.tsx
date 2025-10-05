@@ -4,23 +4,31 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import PaperNetworkGraph from '@/components/PaperNetworkGraph';
-
-interface Paper {
-  id?: string | number;
-  title: string;
-}
+import type { SearchResponse } from '@/types/paper';
 
 export default function Home() {
   const [query, setQuery] = useState('');
-  const [papers, setPapers] = useState<Paper[]>([]);
   const [loading, setLoading] = useState(false);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
 
-    localStorage.setItem('searchQuery', query);
-    window.location.href = '/planet/1';
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/search?q=${encodeURIComponent(query)}&page=0&size=10`);
+      if (!response.ok) throw new Error('Search failed');
+
+      const data: SearchResponse = await response.json();
+
+      localStorage.setItem('searchQuery', query);
+      localStorage.setItem('searchResults', JSON.stringify(data.data));
+      window.location.href = '/planet/1';
+    } catch (error) {
+      console.error('Search error:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
