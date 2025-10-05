@@ -45,26 +45,30 @@ export default function PaperDetail() {
   const handleTabChange = async (tab: TabType) => {
     setActiveTab(tab);
 
-    if (tab === 'explore' && !scientistData && !loading) {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await fetch(`/api/papers/${paperId}/scientist`, {
-          method: 'POST',
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch scientist analysis');
-        }
-
-        const data = await response.json();
-        setScientistData(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
-      } finally {
-        setLoading(false);
-      }
+    if (tab === 'explore' && !error) {
+      setError('Comming soon!');
     }
+
+    // if (tab === 'explore' && !scientistData && !loading) {
+    //   setLoading(true);
+    //   setError(null);
+    //   try {
+    //     const response = await fetch(`/api/papers/${paperId}/scientist`, {
+    //       method: 'POST',
+    //     });
+    //
+    //     if (!response.ok) {
+    //       throw new Error('Comming soon!');
+    //     }
+    //
+    //     const data = await response.json();
+    //     setScientistData(data);
+    //   } catch (err) {
+    //     setError(err instanceof Error ? err.message : 'An error occurred');
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // }
   };
 
   return (
@@ -174,7 +178,7 @@ export default function PaperDetail() {
 
               {error && (
                 <div className="text-center py-12">
-                  <p className="text-red-600">Error: {error}</p>
+                  <p className="text-gray-600">{error}</p>
                 </div>
               )}
 
