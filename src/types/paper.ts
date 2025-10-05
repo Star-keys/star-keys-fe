@@ -14,6 +14,19 @@ export interface SearchPaper {
   fields: string[];
 }
 
+export interface PaperDetail {
+  paperId: string;
+  title: string;
+  doi: string;
+  abstract: string;
+  introduction: string;
+  method: string;
+  result: string;
+  discussion: string;
+  conclusion: string;
+  fields: string[];
+}
+
 export interface SearchResponse {
   data: SearchPaper[];
   pageMeta: {
