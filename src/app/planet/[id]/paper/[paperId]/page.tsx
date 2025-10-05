@@ -30,10 +30,7 @@ export default function PaperDetailPage() {
     const fetchPaperDetail = async () => {
       try {
         setLoading(true);
-        console.log('Fetching paper:', paperId);
         const response = await fetch(`/api/paper/${paperId}`);
-
-        console.log('Response status:', response.status);
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -42,7 +39,6 @@ export default function PaperDetailPage() {
         }
 
         const data: PaperDetail = await response.json();
-        console.log('Paper data:', data);
         setPaper(data);
       } catch (err) {
         console.error('Error fetching paper detail:', err);

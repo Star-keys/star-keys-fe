@@ -13,8 +13,6 @@ export async function GET(request: NextRequest) {
 
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
-    console.log("API URL:", apiUrl); // Debugging line
-
     const params = new URLSearchParams({
       ...(query && { q: query }),
       page: page.toString(),

@@ -8,10 +8,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    console.log('Fetching paper details for ID:', id);
-    console.log('Using API base URL:', API_BASE_URL);
     const response = await fetch(`${API_BASE_URL}/api/external/paper/${id}`);
-    console.log('Backend response status:', response.status);
     if (!response.ok) {
       return NextResponse.json(
         { error: 'API request failed' },
